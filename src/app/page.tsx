@@ -1,6 +1,6 @@
 "use client";
 
-import Piece from "./components/piece";
+import Piece, { PieceHandle } from "./components/piece";
 import { useRef, useState } from "react";
 
 export default function Home() {
@@ -13,7 +13,7 @@ export default function Home() {
   const [allowedPieceTypes, setAllowedPieceTypes] = useState<string>("any");
   const [seed, setSeed] = useState<number>(0);
 
-  const pieceRef = useRef(null);
+  const pieceRef = useRef<PieceHandle>(null);
 
   const handleSubmit = (success: boolean) => {
     if (success) {
@@ -125,10 +125,10 @@ export default function Home() {
                 handleSubmit(success);
               } else if (state == "correct") {
                 nextPiece();
-                pieceRef.current.clear();
+                pieceRef.current?.clear();
                 setState("submitting");
               } else {
-                pieceRef.current.clear();
+                pieceRef.current?.clear();
                 setState("submitting");
                 setRedo(true);
               }
@@ -143,8 +143,8 @@ export default function Home() {
         <div className="flex flex-col gap-2">
           <div
             onClick={() => {
-              if (pieceRef.current.canSubmit())
-                handleSubmit(pieceRef.current.submit());
+              if (pieceRef.current?.canSubmit())
+                handleSubmit(pieceRef.current?.submit());
             }}
             className="bg-white px-5 py-2 hover:cursor-pointer font-semibold text-center"
           >
@@ -152,7 +152,9 @@ export default function Home() {
           </div>
           <div
             onClick={() => {
-              handleSubmit(pieceRef.current.submit());
+              if (pieceRef.current) {
+                handleSubmit(pieceRef.current.submit());
+              }
             }}
             className="bg-[#CB2127] px-5 py-2 hover:cursor-pointer font-semibold text-center"
           >
@@ -164,7 +166,7 @@ export default function Home() {
         <div
           onClick={() => {
             nextPiece();
-            pieceRef.current.clear();
+            pieceRef.current?.clear();
             setState("submitting");
           }}
           className="bg-white px-5 py-2 hover:cursor-pointer font-semibold text-center"
@@ -176,8 +178,8 @@ export default function Home() {
         <div className="flex flex-col gap-2">
           <div
             onClick={() => {
-              pieceRef.current.clear();
-              pieceRef.current.focus();
+              pieceRef.current?.clear();
+              pieceRef.current?.focus();
               setState("submitting");
               setRedo(true);
             }}
@@ -188,7 +190,7 @@ export default function Home() {
           <div
             onClick={() => {
               nextPiece();
-              pieceRef.current.clear();
+              pieceRef.current?.clear();
               setState("submitting");
             }}
             className="bg-white px-5 py-2 hover:cursor-pointer font-semibold text-center"

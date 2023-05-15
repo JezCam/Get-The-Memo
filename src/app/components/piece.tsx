@@ -1,11 +1,17 @@
 import React, {
-  FormEvent,
   forwardRef,
   useEffect,
   useImperativeHandle,
   useRef,
   useState,
 } from "react";
+
+export type PieceHandle = {
+  submit: () => boolean;
+  focus: () => void;
+  canSubmit: () => boolean;
+  clear: () => void;
+};
 
 const Piece = forwardRef(
   (
@@ -132,7 +138,7 @@ const Piece = forwardRef(
         return submit();
       },
       focus() {
-        setTimeout(() => formRef.current.one.focus(), 100);
+        setTimeout(() => formRef.current?.one.focus(), 100);
       },
       canSubmit() {
         if (props.type == "corner" && oneValue && twoValue && threeValue) {
@@ -151,7 +157,7 @@ const Piece = forwardRef(
     }));
 
     const submit = () => {
-      setTimeout(() => formRef.current.one.focus(), 100);
+      setTimeout(() => formRef.current?.one.focus(), 100);
       const solution = getSolution();
 
       const success =
@@ -176,7 +182,7 @@ const Piece = forwardRef(
     };
 
     useEffect(() => {
-      setTimeout(() => formRef.current.one.focus(), 100);
+      setTimeout(() => formRef.current?.one.focus(), 100);
     }, []);
 
     return (
