@@ -1,13 +1,14 @@
 "use client";
 
 import Piece, { PieceHandle } from "./components/piece";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function Home() {
+  const [initialised, setInitialised] = useState<boolean>(false);
+
   const [state, setState] = useState<string>("submitting");
   const [streak, setStreak] = useState<number>(0);
   const [redo, setRedo] = useState<boolean>(false);
-
   // true = corner, false = edge
   const [pieceType, setPieceType] = useState<string>("corner");
   const [allowedPieceTypes, setAllowedPieceTypes] = useState<string>("any");
@@ -63,6 +64,13 @@ export default function Home() {
 
     setSeed(newSeed);
   };
+
+  useEffect(() => {
+    nextPiece();
+    setInitialised(true);
+  }, []);
+
+  if (!initialised) return <></>;
 
   return (
     <main className="flex min-h-screen flex-col gap-10 items-center p-24">
