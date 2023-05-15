@@ -70,7 +70,7 @@ export default function Home() {
         Get The Memo
       </h1>
       <div className="flex flex-col gap-2 items-center text-white">
-        <div className="flex gap-2">
+        <div className="flex gap-2 items-center">
           <label>corners</label>
           <input
             onChange={(e) => {
@@ -91,7 +91,7 @@ export default function Home() {
             }
           ></input>
         </div>
-        <div className="flex gap-2">
+        <div className="flex gap-2 items-center">
           <label>edges</label>
           <input
             onChange={(e) => {
